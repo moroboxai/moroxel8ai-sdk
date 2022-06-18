@@ -1,5 +1,5 @@
 // SDK version
-export const VERSION = "0.1.0-alpha.1";
+export const VERSION = "0.1.0-alpha.2";
 
 /**
  * Interface your game must implements.
@@ -83,6 +83,21 @@ export interface IMoroxel8AI {
      * @param {number} tile - tile id
      */
     stile(id: number, tile: number): void;
+
+    /**
+     * Get the origin attribute of a sprite.
+     * @param {number} id - sprite id
+     * @return {any} - attributes
+     */
+    sorigin(id: number): { x: number, y: number };
+
+    /**
+     * Set the origin attribute of a sprite.
+     * @param {number} id - sprite id
+     * @param {number} x - x-coordinate
+     * @param {number} y - y-coordinate
+     */
+    sorigin(id: number, x: number, y: number): void;
 
     /**
      * Get the position attribute of a sprite.
