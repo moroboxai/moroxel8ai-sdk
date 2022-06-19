@@ -1,5 +1,5 @@
 // SDK version
-export const VERSION = "0.1.0-alpha.2";
+export const VERSION = "0.1.0-alpha.3";
 
 /**
  * Interface your game must implements.
@@ -12,11 +12,35 @@ export interface IGame {
  * Interface for the CPU.
  */
 export interface IMoroxel8AI {
+    /** Screen width (128) */
+    SWIDTH: number;
+
+    /** Screen height (128) */
+    SHEIGHT: number;
+
     /** Maximum number of tilemaps */
     TNUM: number;
 
     /** Maximum number of sprites */
     SNUM: number;
+
+    /** Default mode where the drawing order is decided by the CPU */
+    MDEFAULT: number;
+
+    /** Draw mode where you control the drawing order yourself */
+    MDRAW: number;
+
+    /** Left button */
+    BLEFT: number;
+
+    /** Right button */
+    BRIGHT: number;
+
+    /** Up button */
+    BUP: number;
+
+    /** Down button */
+    BDOWN: number;
 
     /**
      * Print a message to the console.
@@ -25,19 +49,38 @@ export interface IMoroxel8AI {
     print(...values: any[]): void;
 
     /**
+     * Get the state of a button.
+     * @param {number} id - button id
+     * @returns true if pressed
+     */
+    btn(id: number): boolean;
+
+    /**
+     * Get the selected mode.
+     * @returns mode
+     */
+    mode(): number;
+
+    /**
+     * Set the selected mode.
+     * @param {number} value - mode
+     */
+    mode(value: number): void;
+
+    /**
      * Get the draw color.
      * @return {number} - color
      */
     color(): number;
 
     /**
-     * Set the draw color.
+     * Set the draw color (only with MDRAW).
      * @param {number} col - color
      */
     color(col: number): void;
     
     /**
-     * Clear the screen.
+     * Clear the screen (only with MDRAW).
      * @param {number} col - color
      */
     cls(col?: number): void;
@@ -63,7 +106,7 @@ export interface IMoroxel8AI {
     pget(x: number, y: number): number;
 
     /**
-     * Set the color of an individual pixel.
+     * Set the color of an individual pixel (only with MDRAW).
      * @param {number} x - x-coordinate
      * @param {number} y - y-coordinate
      * @param {number} col - color
@@ -115,20 +158,6 @@ export interface IMoroxel8AI {
     spos(id: number, x: number, y: number): void;
 
     /**
-     * Get the visibility of a sprite.
-     * @param {number} id - sprite id
-     * @return {boolean} - visibility
-     */
-    sshow(id: number): boolean;
-
-    /**
-     * Change the visibility of a sprite.
-     * @param {number} id - sprite id
-     * @param {boolean} v - visibility
-     */
-    sshow(id: number, v: boolean): void;
-
-    /**
      * Get the flip attributes of a sprite.
      * @param {number} id - sprite id
      * @return {any} - attributes
@@ -171,6 +200,11 @@ export interface IMoroxel8AI {
      * @param {number} a - angle in degrees
      */
     srot(id: number, a: number): void;
+
+    /**
+     * Draw a sprite (only with MDRAW).
+     */
+    sdraw(id: number): void;
 }
 
 /**
