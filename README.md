@@ -6,7 +6,7 @@
 [![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/moroboxai/moroxel8ai-sdk.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/moroboxai/moroxel8ai-sdk/context:javascript)
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/moroboxai/moroxel8ai-sdk.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/moroboxai/moroxel8ai-sdk/alerts)
 
-This package is for you if you want to build a game for [MoroboxAI](https://github.com/moroboxai/moroboxai) targeting the [Moroxel8AI](https://github.com/moroboxai/moroxel8ai) fantasy 8-bit CPU.
+API definitions for the [Moroxel8AI](https://github.com/moroboxai/moroxel8ai) fantasy 8-bit CPU.
 
 ## Install
 
