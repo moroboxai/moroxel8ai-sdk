@@ -24,6 +24,12 @@ export interface IMoroxel8AI {
     /** Maximum number of sprites */
     SNUM: number;
 
+    /** First player */
+    P1: number;
+
+    /** Second player */
+    P2: number;
+
     /** Left button */
     BLEFT: number;
 
@@ -43,11 +49,19 @@ export interface IMoroxel8AI {
     print(...values: any[]): void;
 
     /**
-     * Get the state of a button.
-     * @param {number} id - button id
+     * Get the state of a button for P1.
+     * @param {number} bid - button id
      * @returns true if pressed
      */
-    btn(id: number): boolean;
+    btn(bid: number): boolean;
+
+    /**
+     * Get the state of a button.
+     * @param {number} pid - player id
+     * @param {number} bid - button id
+     * @returns true if pressed
+     */
+    btn(pid: number, bid: number): boolean;
 
     //############
     // TILEMAP API
