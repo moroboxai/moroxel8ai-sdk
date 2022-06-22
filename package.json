@@ -1,7 +1,7 @@
 {
   "name": "moroxel8ai-sdk",
   "version": "0.1.0-alpha.3",
-  "description": "SDK for building games targeting the Moroxel8AI fantasy 8-bit CPU",
+  "description": "API definitions for the Moroxel8AI fantasy 8-bit CPU",
 	"author": "moroboxai",
 	"main": "./lib/cjs/index.js",
 	"module": "./lib/es/index.js",

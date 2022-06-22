@@ -24,12 +24,6 @@ export interface IMoroxel8AI {
     /** Maximum number of sprites */
     SNUM: number;
 
-    /** Default mode where the drawing order is decided by the CPU */
-    MDEFAULT: number;
-
-    /** Draw mode where you control the drawing order yourself */
-    MDRAW: number;
-
     /** Left button */
     BLEFT: number;
 
@@ -55,77 +49,76 @@ export interface IMoroxel8AI {
      */
     btn(id: number): boolean;
 
-    /**
-     * Get the selected mode.
-     * @returns mode
-     */
-    mode(): number;
+    //############
+    // TILEMAP API
+    //############
 
     /**
-     * Set the selected mode.
-     * @param {number} value - mode
-     */
-    mode(value: number): void;
-
-    /**
-     * Get the draw color.
-     * @return {number} - color
-     */
-    color(): number;
-
-    /**
-     * Set the draw color (only with MDRAW).
-     * @param {number} col - color
-     */
-    color(col: number): void;
-    
-    /**
-     * Clear the screen (only with MDRAW).
-     * @param {number} col - color
-     */
-    cls(col?: number): void;
-
-    /**
-     * Get the selected tilemap.
-     * @return {string} - tilemap name
-     */
-    tmap(): string;
-
-    /**
-     * Set the selected tilemap.
-     * @param {string} id - tilemap name
+     * Select a tilemap by its unique id.
+     * @param {string} id - tilemap unique id
      */
     tmap(id: string): void;
 
-    /**
-     * Get the color of an individual pixel.
-     * @param {number} x - x-coordinate
-     * @param {number} y - y-coordinate
-     * @return {number} - color
-     */
-    pget(x: number, y: number): number;
+    //############
+    // MAP API
+    //############
 
     /**
-     * Set the color of an individual pixel (only with MDRAW).
-     * @param {number} x - x-coordinate
-     * @param {number} y - y-coordinate
-     * @param {number} col - color
+     * Select map mode (8 | 16 | 32 | 64) pixels.
+     * 
+     * This allows mtile to works on 8x8, 16x16, ... tiles.
+     * 
+     * @param {number} val - new mode
      */
-    pset(x: number, y: number, col?: number): void;
+    mmode(val: number): void;
 
     /**
-     * Get the tile assigned to a sprite.
-     * @param {number} id - sprite id
-     * @return {number} - tile
+     * Clear the map tiles.
      */
-    stile(id: number): number;
+    mclear(): void;
+
+    /**
+     * Set a tile on the map.
+     * 
+     * x and y are affected by mode, meaning that x=1 corresponds
+     * to the second tile if mode is 8, or the fourth tile if mode
+     * is 16.
+     * 
+     * If w > 1 or h > 1, then it sets the [x, x+w[ and [y, y+h[ tiles
+     * of the map.
+     * 
+     * @param {number} x - horizontal position
+     * @param {number} y - vertical position
+     * @param {number} i - tile position
+     * @param {number} j - tile position
+     * @param {number} w - tile width
+     * @param {number} h - tile height
+     */
+    mtile(x: number, y: number, i: number, j: number, w?: number, h?: number): void;
+
+    /**
+     * Scroll map to position.
+     * 
+     * This is not affected by mode.
+     * 
+     * @param {number} x - horizontal position
+     * @param {number} y - vertical position
+     */
+    mscroll(x: number, y: number): void;
+
+    //###########
+    // SPRITE API
+    //###########
 
     /**
      * Assign a tile to a sprite.
      * @param {number} id - sprite id
-     * @param {number} tile - tile id
+     * @param {number} i - tile position
+     * @param {number} j - tile position
+     * @param {number} w - tile width
+     * @param {number} h - tile height
      */
-    stile(id: number, tile: number): void;
+    stile(id: number, i: number, j: number, w?: number, h?: number): void;
 
     /**
      * Get the origin attribute of a sprite.
@@ -177,15 +170,15 @@ export interface IMoroxel8AI {
      * @param {number} id - sprite id
      * @return {any} - attributes
      */
-    sscale(id: number): { h: number, v: number };
+    sscale(id: number): { x: number, y: number };
 
     /**
      * Set the scales attributes of a sprite.
      * @param {number} id - sprite id
-     * @param {number} h - horizontal scale
-     * @param {number} v - vertical scale
+     * @param {number} x - horizontal scale
+     * @param {number} y - vertical scale
      */
-    sscale(id: number, h: number, v: number): void;
+    sscale(id: number, x: number, y: number): void;
 
     /**
      * Get the rotation attribute of a sprite.
@@ -200,11 +193,6 @@ export interface IMoroxel8AI {
      * @param {number} a - angle in degrees
      */
     srot(id: number, a: number): void;
-
-    /**
-     * Draw a sprite (only with MDRAW).
-     */
-    sdraw(id: number): void;
 }
 
 /**
