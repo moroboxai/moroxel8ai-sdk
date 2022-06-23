@@ -1,5 +1,5 @@
 // SDK version
-export const VERSION = "0.1.0-alpha.4";
+export const VERSION = "0.1.0-alpha.5";
 
 /**
  * Interface your game must implements.
@@ -238,6 +238,18 @@ export interface IMoroxel8AI {
      * @param {number} a - angle in degrees
      */
     srot(id: number, a: number): void;
+
+    //###########
+    // MATH API
+    //###########
+
+    abs(val: number): number;
+    floor(val: number): number;
+    ceil(val: number): number;
+    sign(val: number): number;
+    min(a: number, b: number): number;
+    max(a: number, b: number): number;
+    clamp(val: number, min: number, max: number): number;
 }
 
 /**
