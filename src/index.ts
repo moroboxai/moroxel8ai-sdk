@@ -1,5 +1,5 @@
 // SDK version
-export const VERSION = "0.1.0-alpha.3";
+export const VERSION = "0.1.0-alpha.4";
 
 /**
  * Interface your game must implements.
@@ -48,6 +48,23 @@ export interface IMoroxel8AI {
      */
     print(...values: any[]): void;
 
+    //############
+    // PLAYER API
+    //############
+
+    /**
+     * Send the game state to all players.
+     * @param {any} val - game state 
+     */
+    state(val: any): void;
+
+    /**
+     * Send the game state to selected player.
+     * @param {number} pid - player id
+     * @param {any} val - game state 
+     */
+    state(pid: number, val: any): void;
+
     /**
      * Get the state of a button for P1.
      * @param {number} bid - button id
@@ -62,6 +79,20 @@ export interface IMoroxel8AI {
      * @returns true if pressed
      */
     btn(pid: number, bid: number): boolean;
+
+    /**
+     * Get if an AI is bound to a player controller.
+     * @param {number} pid - player id
+     * @returns {boolean} true if AI bound
+     */
+    pbound(pid: number): boolean;
+
+    /**
+     * Get the label of a player.
+     * @param {number} pid - player id
+     * @returns {string} player label
+     */
+    plabel(pid: number): string;
 
     //############
     // TILEMAP API
