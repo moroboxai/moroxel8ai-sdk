@@ -1,5 +1,5 @@
 // SDK version
-export const VERSION = "0.1.0-alpha.5";
+export const VERSION = "0.1.0-alpha.6";
 
 /**
  * Interface your game must implements.
@@ -41,6 +41,20 @@ export interface IMoroxel8AI {
 
     /** Down button */
     BDOWN: number;
+
+    /**
+     * Clear the screen.
+     */
+    clear(): void;
+    clear(c: number): void;
+
+    /**
+     * Set camera position.
+     * 
+     * @param {number} x - x-coordinate
+     * @param {number} y - y-coordinate
+     */
+    camera(x: number, y: number): void;
 
     /**
      * Print a message to the console.
@@ -99,15 +113,12 @@ export interface IMoroxel8AI {
     //############
 
     /**
-     * Select a tilemap by its unique id.
-     * @param {string} id - tilemap unique id
+     * Get id of a tilemap identified by a unique name.
+     * @param {string} name - tilemap unique name
+     * @returns {number} tilemap id
      */
-    tmap(id: string): void;
-
-    //############
-    // MAP API
-    //############
-
+    tmap(name: string): number;
+    
     /**
      * Select map mode (8 | 16 | 32 | 64) pixels.
      * 
@@ -115,49 +126,15 @@ export interface IMoroxel8AI {
      * 
      * @param {number} val - new mode
      */
-    mmode(val: number): void;
-
-    /**
-     * Clear the map tiles.
-     */
-    mclear(): void;
-
-    /**
-     * Set a tile on the map.
-     * 
-     * x and y are affected by mode, meaning that x=1 corresponds
-     * to the second tile if mode is 8, or the fourth tile if mode
-     * is 16.
-     * 
-     * If w > 1 or h > 1, then it sets the [x, x+w[ and [y, y+h[ tiles
-     * of the map.
-     * 
-     * @param {number} x - horizontal position
-     * @param {number} y - vertical position
-     * @param {number} i - tile position
-     * @param {number} j - tile position
-     * @param {number} w - tile width
-     * @param {number} h - tile height
-     */
-    mtile(x: number, y: number, i: number, j: number, w?: number, h?: number): void;
-
-    /**
-     * Scroll map to position.
-     * 
-     * This is not affected by mode.
-     * 
-     * @param {number} x - horizontal position
-     * @param {number} y - vertical position
-     */
-    mscroll(x: number, y: number): void;
+    tmode(val: number): void;
 
     //###########
     // SPRITE API
     //###########
 
     /**
-     * Assign a tile to a sprite.
-     * @param {number} id - sprite id
+     * Set the tile for next sprite.
+     * @param {number} id - tilemap id
      * @param {number} i - tile position
      * @param {number} j - tile position
      * @param {number} w - tile width
@@ -166,78 +143,82 @@ export interface IMoroxel8AI {
     stile(id: number, i: number, j: number, w?: number, h?: number): void;
 
     /**
-     * Get the origin attribute of a sprite.
-     * @param {number} id - sprite id
-     * @return {any} - attributes
-     */
-    sorigin(id: number): { x: number, y: number };
-
-    /**
-     * Set the origin attribute of a sprite.
-     * @param {number} id - sprite id
+     * Set the origin attribute of next sprite.
      * @param {number} x - x-coordinate
      * @param {number} y - y-coordinate
      */
-    sorigin(id: number, x: number, y: number): void;
+    sorigin(x: number, y: number): void;
 
     /**
-     * Get the position attribute of a sprite.
-     * @param {number} id - sprite id
-     * @return {any} - attributes
-     */
-    spos(id: number): { x: number, y: number };
-
-    /**
-     * Set the position attribute of a sprite.
-     * @param {number} id - sprite id
-     * @param {number} x - x-coordinate
-     * @param {number} y - y-coordinate
-     */
-    spos(id: number, x: number, y: number): void;
-
-    /**
-     * Get the flip attributes of a sprite.
-     * @param {number} id - sprite id
-     * @return {any} - attributes
-     */
-    sflip(id: number): { h: boolean, v: boolean };
-
-    /**
-     * Set the flips attributes of a sprite.
-     * @param {number} id - sprite id
+     * Set the flips attributes of next sprite.
      * @param {number} h - horizontal flip
      * @param {number} v - vertical flip
      */
-    sflip(id: number, h: boolean, v: boolean): void;
+    sflip(h: boolean, v: boolean): void;
 
     /**
-     * Get the scales attributes of a sprite.
-     * @param {number} id - sprite id
-     * @return {any} - attributes
-     */
-    sscale(id: number): { x: number, y: number };
-
-    /**
-     * Set the scales attributes of a sprite.
-     * @param {number} id - sprite id
+     * Set the scales attributes of next sprite.
      * @param {number} x - horizontal scale
      * @param {number} y - vertical scale
      */
-    sscale(id: number, x: number, y: number): void;
+    sscale(x: number, y: number): void;
 
     /**
-     * Get the rotation attribute of a sprite.
-     * @param {number} id - sprite id
-     * @return {number} - attributes
-     */
-    srot(id: number): number;
-
-    /**
-     * Set the rotation attribute of a sprite.
-     * @param {number} id - sprite id
+     * Set the rotation attribute of next sprite.
      * @param {number} a - angle in degrees
      */
-    srot(id: number, a: number): void;
+    srot(a: number): void;
+
+    /**
+     * Clear all attributes of next sprite.
+     */
+    sclear(): void;
+
+    /**
+     * Draw next sprite.
+     * 
+     * @param {number} x - x-coordinate
+     * @param {number} y - y-coordinate
+     */
+    sdraw(x: number, y: number): void;
+
+    //###########
+    // TEXT API
+    //###########
+
+    /**
+     * Get id of a font identified by a unique name.
+     * @param {string} name - font unique name
+     * @returns {number} font id
+     */
+    fnt(name: string): number;
+
+    /**
+     * Set the align attribute of next text.
+     * @param {number} x - horizontal alignment
+     * @param {number} y - vertical alignment
+     */
+    falign(x: number, y: number): void;
+
+    /**
+     * Set the color attribute of next text.
+     * @param {number} c - hexadecimal color
+     */
+    fcolor(c: number): void;
+
+    /**
+     * Clear all attributes of next text.
+     */
+    fclear(): void;
+
+    /**
+     * Draw next text.
+     * @param {number} id - font id
+     * @param {string} text - text to draw
+     * @param {number} x - x-coordinate
+     * @param {number} y - y-coordinate
+     */
+    fdraw(id: number, text: string, x: number, y: number): void;
 
     //###########
     // MATH API

@@ -1,6 +1,6 @@
 {
   "name": "moroxel8ai-sdk",
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "description": "API definitions for the Moroxel8AI fantasy 8-bit CPU",
 	"author": "moroboxai",
 	"main": "./lib/cjs/index.js",
