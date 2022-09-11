@@ -1,5 +1,5 @@
 // SDK version
-export const VERSION = "0.1.0-alpha.6";
+export const VERSION = "0.1.0-alpha.7";
 
 /**
  * Interface your game must implements.
@@ -181,6 +181,23 @@ export interface IMoroxel8AI {
      * @param {number} y - y-coordinate
      */
     sdraw(x: number, y: number): void;
+
+    /**
+     * Draw a box using the tiles assigned with stile.
+     * 
+     * This is not affected by:
+     * - the camera position
+     * - the sprite attributes
+     * 
+     * This is affected by:
+     * - the tile attribute
+     * 
+     * @param {number} x - top-left x-coordinate
+     * @param {number} y - top-left y-coordinate
+     * @param {number} w - width
+     * @param {number} h - height
+     */
+    sbox(x: number, y: number, w: number, h: number): void;
 
     //###########
     // TEXT API
