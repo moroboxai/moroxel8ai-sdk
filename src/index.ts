@@ -1,5 +1,5 @@
 // SDK version
-export const VERSION = "0.1.0-alpha.7";
+export const VERSION = "0.1.0-alpha.8";
 
 /**
  * Interface your game must implements.
@@ -248,6 +248,8 @@ export interface IMoroxel8AI {
     min(a: number, b: number): number;
     max(a: number, b: number): number;
     clamp(val: number, min: number, max: number): number;
+    cos(val: number): number;
+    sin(val: number): number;
 }
 
 /**
